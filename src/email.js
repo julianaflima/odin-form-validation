@@ -1,11 +1,15 @@
+import { showMessage } from "./delegate.js"
+
 const email = (() => {
-	const mismatch = () => {
-		const email = document.querySelector('[name="emailId"]')
-		email.setCustomValidity('Please write an email address.')
-		email.reportValidity();
-	}
+	const getErrorMessage = (field) => {
+		if (field.validity.typeMismatch) {
+			const message = 'Please write an email address';
+			showMessage(field, message);
+		}
+	};
+	
 	return {
-		mismatch,
+		getErrorMessage,
 	}
 })();
 

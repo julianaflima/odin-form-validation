@@ -1,44 +1,30 @@
-import { email } from "./email.js"
+import { email } from "./email.js";
+import { country } from "./country.js";
+import { zipcode } from "./zipcode.js";
+import { password } from "./password.js";
 
-function getMessage(field) {
+function findInvalidField(field) {
 	const name = field.name;
 	switch (name) {
 		case 'emailId':
-			if (field.validity.typeMismatch){
-				email.mismatch(name);
-			}
+			email.getErrorMessage(field);
 			break;
 		case 'country':
-			if (field.validity.tooShort) {
-				console.log('country name too short')
-			} else if (field.validity.patternMismatch) {
-				console.log('country name can only contain letters');
-			}
+			country.getErrorMessage(field);
 			break;
 		case 'zipcode':
-			if (field.validity.tooShort) {
-				console.log('zip code too short');
-			} else if (field.validity.tooLong) {
-				console.log('zip code too long');
-			} else if (field.validity.patternMismatch) {
-				console.log('zip code can only contain numbers')
-			}
+			zipcode.getErrorMessage(field);
 			break;
 		case 'pwd':
-			if (field.validity.tooShort) {
-				console.log('password too short')
-			} else if (field.validity.tooLong) {
-				console.log('password too long');
-			} else {
-				// check for pattern mismatch
-			}
-			break;
-		case 'confirmpwd':
-			// check if this matches password
+			password.getErrorMessage(field);
 			break;
 	}
+}
 
+function showMessage(field, message) {
+	field.setCustomValidity(message);
+	field.reportValidity();
 }
 
 
-export { getMessage }
+export { findInvalidField, showMessage }
